@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Code Evaluation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+        textarea {
+            font-family: 'Courier New', monospace;
+            min-height: 300px;
+            resize: vertical;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        .results.show {
+            display: block;
+        }
+        .score-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .score-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .score-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .score-value.low { color: #ef4444; }
+        .score-value.medium { color: #f59e0b; }
+        .score-value.high { color: #10b981; }
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        .progress-fill.low { background: #ef4444; }
+        .progress-fill.medium { background: #f59e0b; }
+        .progress-fill.high { background: #10b981; }
+        .improvements-section {
+            margin-top: 20px;
+        }
+        .improvements-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .improvements-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .improvements-section li {
+            background: white;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Code Evaluation Test</h1>
+        
+        <div class="form-group">
+            <label for="roomId">Room ID:</label>
+            <input type="text" id="roomId" placeholder="e.g., test-room-123" value="test-code-room">
+        </div>
+
+        <div class="form-group">
+            <label for="fileName">File Name (Optional):</label>
+            <input type="text" id="fileName" placeholder="e.g., app.js" value="calculator.js">
+        </div>
+
+        <div class="form-group">
+            <label for="language">Language (Optional):</label>
+            <input type="text" id="language" placeholder="e.g., javascript" value="javascript">
+        </div>
+
+        <div class="form-group">
+            <label for="code">Your Code:</label>
+            <textarea id="code" placeholder="Paste your code here...">// Simple calculator function
+function calculate(operation, a, b) {
+    if (operation === 'add') {
+        return a + b;
+    } else if (operation === 'subtract') {
+        return a - b;
+    } else if (operation === 'multiply') {
+        return a * b;
+    } else if (operation === 'divide') {
+        if (b === 0) {
+            throw new Error('Cannot divide by zero');
+        }
+        return a / b;
+    } else {
+        throw new Error('Invalid operation');
+    }
+}
+
+// Example usage
+console.log(calculate('add', 5, 3));
+console.log(calculate('divide', 10, 2));</textarea>
+        </div>
+
+        <button id="evaluateBtn" onclick="evaluateCode()">🚀 Evaluate Code</button>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function evaluateCode() {
+            const roomId = document.getElementById('roomId').value.trim();
+            const code = document.getElementById('code').value.trim();
+            const fileName = document.getElementById('fileName').value.trim();
+            const language = document.getElementById('language').value.trim();
+            const resultsDiv = document.getElementById('results');
+            const btn = document.getElementById('evaluateBtn');
+
+            if (!roomId || !code) {
+                alert('Please fill in Room ID and Code!');
+                return;
+            }
+
+            // Show loading
+            btn.disabled = true;
+            btn.textContent = '⏳ Evaluating...';
+            resultsDiv.innerHTML = '<div class="loading">🤖 AI is analyzing your code...</div>';
+            resultsDiv.classList.add('show');
+
+            try {
+                const response = await fetch('http://localhost:5000/api/evaluate/code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        roomId,
+                        code,
+                        fileName: fileName || undefined,
+                        language: language || undefined
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data.data);
+                } else {
+                    resultsDiv.innerHTML = `<div class="error">❌ ${data.message || 'Evaluation failed'}</div>`;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🚀 Evaluate Code';
+            }
+        }
+
+        function displayResults(data) {
+            const scores = data.scores;
+            const resultsDiv = document.getElementById('results');
+
+            let html = '<h2 style="margin-bottom: 20px; color: #333;">📊 Code Quality Report</h2>';
+
+            // Average Score Card
+            const avgScore = scores.average;
+            const avgClass = avgScore >= 7 ? 'high' : avgScore >= 4 ? 'medium' : 'low';
+            html += `
+                <div class="score-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <div class="score-header">
+                        <span class="score-name" style="color: white; font-size: 18px;">Overall Code Quality</span>
+                        <span class="score-value" style="color: white;">${avgScore.toFixed(2)}/10</span>
+                    </div>
+                </div>
+            `;
+
+            // Individual Scores
+            const scoreMetrics = [
+                { name: 'Readability', value: scores.readability },
+                { name: 'Structure', value: scores.structure },
+                { name: 'Maintainability', value: scores.maintainability },
+                { name: 'Correctness', value: scores.correctness },
+                { name: 'Security', value: scores.security },
+                { name: 'Best Practices', value: scores.bestPractices }
+            ];
+
+            scoreMetrics.forEach(metric => {
+                const scoreClass = metric.value >= 7 ? 'high' : metric.value >= 4 ? 'medium' : 'low';
+                html += `
+                    <div class="score-card">
+                        <div class="score-header">
+                            <span class="score-name">${metric.name}</span>
+                            <span class="score-value ${scoreClass}">${metric.value}/10</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${scoreClass}" style="width: ${metric.value * 10}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Improvements
+            if (data.improvements && data.improvements.length > 0) {
+                html += `
+                    <div class="improvements-section">
+                        <h3>💡 Suggested Improvements</h3>
+                        <ul>
+                            ${data.improvements.map(imp => `<li>${imp}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Security Issues
+            if (data.securityIssues && data.securityIssues.length > 0) {
+                html += `
+                    <div class="improvements-section">
+                        <h3>🔒 Security Issues</h3>
+                        <ul>
+                            ${data.securityIssues.map(issue => `<li style="border-left-color: #ef4444;">${issue}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Best Practices Violations
+            if (data.bestPracticesViolations && data.bestPracticesViolations.length > 0) {
+                html += `
+                    <div class="improvements-section">
+                        <h3>⚠️ Best Practices Violations</h3>
+                        <ul>
+                            ${data.bestPracticesViolations.map(violation => `<li style="border-left-color: #f59e0b;">${violation}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Allow Enter key to submit in inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') evaluateCode();
+            });
+        });
+    </script>
+</body>
+</html>
