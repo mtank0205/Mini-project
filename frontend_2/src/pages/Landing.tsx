@@ -47,7 +47,7 @@ export default function Landing() {
 
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               Simulate. Evaluate.{" "}
-              <span className="bg-gradient-accent bg-clip-text text-transparent">
+              <span className="gradient-accent bg-clip-text text-transparent font-bold font-sans">
                 Win.
               </span>
             </h1>
@@ -89,7 +89,7 @@ export default function Landing() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Everything you need to{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
+            <span className="gradient-primary bg-clip-text text-transparent">
               succeed
             </span>
           </h2>

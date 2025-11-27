@@ -58,8 +58,8 @@ export default function Dashboard() {
       link: "/repo",
     },
     {
-      title: "View Reports",
-      description: "Access your previous evaluation reports and scores",
+      title: "Final Report",
+      description: "Access your final evaluation report and score",
       icon: FileText,
       gradient: "gradient-primary",
       link: "/reports",
@@ -75,7 +75,7 @@ export default function Dashboard() {
         {/* Welcome Section */}
         <div className="mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold mb-2">
-            Welcome back, <span className="bg-gradient-primary bg-clip-text text-transparent">{user.username}</span>
+            Welcome back, <span className="gradient-primary bg-clip-text text-transparent">{user.username}</span>
           </h1>
           <p className="text-muted-foreground text-lg">
             Ready to build something amazing? Let's get started.
@@ -94,7 +94,7 @@ export default function Dashboard() {
                   style={{ animationDelay: `${index * 0.1} s` }}
                 >
                   <CardHeader>
-                    <div className={`inline - flex p - 3 rounded - xl ${card.gradient} w - fit mb - 4`}>
+                    <div className={`inline-flex p-3 rounded-xl ${card.gradient} w-fit mb-4`}>
                       <card.icon className="h-6 w-6 text-white" />
                     </div>
                     <CardTitle className="text-xl">{card.title}</CardTitle>

@@ -119,7 +119,7 @@ export default function RepoEvaluation() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-8 animate-fade-in">
             <h1 className="text-4xl font-bold mb-2">
-              <span className="bg-gradient-primary bg-clip-text text-transparent">Repository</span> Analysis
+              <span className="gradient-primary bg-clip-text text-transparent">Repository</span> Analysis
             </h1>
             <p className="text-muted-foreground text-lg">
               Get comprehensive analysis of your GitHub repository

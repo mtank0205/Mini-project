@@ -33,7 +33,7 @@ export default function IdeaEvaluation() {
     }
 
     setIsLoading(true);
-    
+
     try {
       const roomId = `idea-${Date.now()}`;
       const response = await evaluationApi.evaluateIdea({
@@ -57,7 +57,7 @@ export default function IdeaEvaluation() {
         feedback: data.summary || "Evaluation completed successfully.",
         improvements: data.improvements || [],
       });
-      
+
       toast({
         title: "Evaluation Complete!",
         description: "Your idea has been evaluated by AI",
@@ -97,7 +97,7 @@ export default function IdeaEvaluation() {
         techStack: techStack.split('\n').filter(t => t.trim()),
         results,
       });
-      
+
       toast({
         title: "PDF Downloaded!",
         description: "Your evaluation report has been saved",
@@ -114,12 +114,12 @@ export default function IdeaEvaluation() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar user={user} />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8 animate-fade-in">
             <h1 className="text-4xl font-bold mb-2">
-              <span className="bg-gradient-primary bg-clip-text text-transparent">AI-Powered</span> Idea Evaluation
+              <span className="gradient-primary bg-clip-text text-transparent">AI-Powered</span> Idea Evaluation
             </h1>
             <p className="text-muted-foreground text-lg">
               Get comprehensive feedback on your hackathon idea from our AI judge
@@ -182,8 +182,8 @@ export default function IdeaEvaluation() {
                     />
                   </div>
 
-                  <Button 
-                    className="w-full gradient-primary" 
+                  <Button
+                    className="w-full gradient-primary"
                     size="lg"
                     onClick={handleEvaluate}
                     disabled={isLoading}
@@ -243,7 +243,7 @@ export default function IdeaEvaluation() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <p className="text-muted-foreground">{results.feedback}</p>
-                      
+
                       <div className="space-y-2">
                         <h4 className="font-semibold flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />

@@ -65,13 +65,13 @@ export default function Reports() {
     );
   }
 
-  const matchColor = report.ideaRepoMatch.matchScore >= 70 ? "text-green-500" : 
-                     report.ideaRepoMatch.matchScore >= 50 ? "text-yellow-500" : "text-red-500";
+  const matchColor = report.ideaRepoMatch.matchScore >= 70 ? "text-green-500" :
+    report.ideaRepoMatch.matchScore >= 50 ? "text-yellow-500" : "text-red-500";
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar user={user} />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Header */}
@@ -79,7 +79,7 @@ export default function Reports() {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h1 className="text-4xl font-bold mb-2">
-                  Unified <span className="bg-gradient-primary bg-clip-text text-transparent">Evaluation Report</span>
+                  Unified <span className="gradient-primary bg-clip-text text-transparent">Evaluation Report</span>
                 </h1>
                 <p className="text-muted-foreground text-lg">Latest Idea + Repository Analysis</p>
               </div>
@@ -105,7 +105,7 @@ export default function Reports() {
             <CardContent className="p-8">
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="text-center">
-                  <div className="inline-flex p-4 rounded-full bg-gradient-primary mb-4">
+                  <div className="inline-flex p-4 rounded-full gradient-primary mb-4">
                     <Trophy className="h-8 w-8 text-white" />
                   </div>
                   <h2 className="text-2xl font-semibold mb-4">Overall Score</h2>
@@ -114,7 +114,7 @@ export default function Reports() {
                   </div>
                   <p className="text-muted-foreground text-lg">out of 10.0</p>
                 </div>
-                
+
                 <div className="flex flex-col justify-center space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium">Idea Score</span>

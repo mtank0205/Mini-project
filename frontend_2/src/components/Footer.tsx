@@ -8,10 +8,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gradient-primary">
+              <div className="p-2 rounded-lg gradient-primary">
                 <Code2 className="h-5 w-5 text-white" />
               </div>
-              <span className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
+              <span className="text-lg font-bold gradient-primary bg-clip-text text-transparent">
                 HackSim
               </span>
             </div>

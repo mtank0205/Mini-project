@@ -41,11 +41,11 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 gradient-hero opacity-10 animate-gradient-shift bg-[length:200%_200%]" />
-      
+
       <Card className="w-full max-w-md relative animate-scale-in glass">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="p-3 rounded-xl bg-gradient-primary">
+            <div className="p-3 rounded-xl gradient-primary">
               <Code2 className="h-8 w-8 text-white" />
             </div>
           </div>
